@@ -3,6 +3,7 @@
 
 long long int pick_random(long long int n){
     long long int a = rand()%(n-3)+2;
+    if(a%2) a=a-1;
     return a;
 }
 long long int jacobi(long long int n,long long int a){
@@ -10,17 +11,21 @@ long long int jacobi(long long int n,long long int a){
     if(a==1) return 1;
     long long int a1=0;
     long long int e=0;
-    while(a/(1<<e)==(double)a/(1<<e)){
-        a1=a/(1<<e);
+    long long int x=(1<<e);
+    while(x<a){
         e++;
+        x=(1<<e);
     }
+    a1=a/x;
+    printf("Value of a1 : %lld\n",a1);
+     printf("Value of e : %lld\n",e);
     long long int s=0;
     if(e%2==0){
         s=1;
     }
     else if((n-1)%8==0 || (n-7)%8==0) s=1;
     else if ((n-3)%8==0 || (n-5)%8==0) s=-1;
-    if((n-3)%4==0 && (a1-3)%4==0) s=-s;
+    if((n-3)%4==0 && (a1-3)%4==0) s=-1*s;
     long long n1= n%a1;
     if(a1==1) return s;
     return s*jacobi(n1,a1);
@@ -47,7 +52,7 @@ long long int modExponentiation(long long int base, long long int exponent, long
         }
     }
 
-    // printf("%d\n", bits);
+    printf("%d\n", bits);
     return result;
 }
 
